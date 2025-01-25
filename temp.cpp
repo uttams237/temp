@@ -13,6 +13,33 @@ using namespace std;
 #define ub upper_bound
 
 
+//UNION FIND
+//initialize parent array and rank array
+vector<int> rank, parent;
+
+// function to find parent
+int findPar(int i){
+    if(parent[i]==i)return i;
+    parent[i]= findPar(parent[i]);
+    return parent[i];
+}
+
+// function to club 2 elements
+void unionFun(int a,int b){
+    a= findPar(a);
+    b= findPar(b);
+    
+    // connect element with small rank with bigger one
+    if(rank[a]>rank[b]) parent[b]=a;
+    else if(rank[b]>rank[a])parent[a]= b;
+    else{
+        parent[b]= a;
+        rank[a]++;
+    }
+}
+
+//----------------------------------------
+
 vector<int> rabin_karp(string const& s, string const& t) {  // s:pattern , t:text
     const int p = 31; 
     const int m = 1e9 + 9;
